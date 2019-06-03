@@ -34,13 +34,7 @@ defmodule NucleotideCount do
     Enum.reduce(
       strand,
       Map.new(@nucleotides, &{&1, 0}),
-      fn(x, acc) ->
-        if Map.has_key?(acc, x) do
-          Map.merge(acc, %{x => acc[x] + 1 })
-        else
-          Map.merge(acc, %{x => 1})
-        end
-      end
+      fn(x, acc) -> Map.update(acc, x, 1, &(&1 + 1)) end
     )
 
     # Alternatives:
