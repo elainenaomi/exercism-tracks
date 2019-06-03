@@ -31,11 +31,24 @@ defmodule NucleotideCount do
   """
   @spec histogram([char]) :: map
   def histogram(strand) do
-    @nucleotides
-    |> Enum.map(fn k -> {k, count(strand,k)} end) # tuple
-    |> Enum.into(%{}) # map
+    Enum.reduce(
+      strand,
+      Map.new(@nucleotides, &{&1, 0}),
+      fn(x, acc) ->
+        if Map.has_key?(acc, x) do
+          Map.merge(acc, %{x => acc[x] + 1 })
+        else
+          Map.merge(acc, %{x => 1})
+        end
+      end
+    )
 
     # Alternatives:
+
+    # @nucleotides
+    # |> Enum.map(fn k -> {k, count(strand,k)} end) # tuple
+    # |> Enum.into(%{}) # map
+
     # Map.new(@nucleotides, &{&1, count(strand, &1)})
   end
 end
