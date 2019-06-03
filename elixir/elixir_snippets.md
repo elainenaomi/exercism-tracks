@@ -17,7 +17,7 @@ Enum.all?(["foo", "bar", "hello"], &(String.length(&1) ==3));
 Enum.any?(["foo", "bar", "hello"], fn(s) -> String.length(s) == 5 end)
 ```
 
-```
+```elixir
 Enum.reduce(
   [1, "not a number", 2, :x, 3],
   0,
@@ -47,7 +47,7 @@ def empty_map?(map) when is_map(map), do: false
 
 ## Recursive functions
 
-```
+```elixir
 defmodule ListHelper do
   def sum([]), do: 0
   def sum([head | tail]), do: head + sum(tail)
@@ -68,7 +68,7 @@ end
 ```
 # ETS
 
-```
+```elixir
  def histogram(strand) do
     :ets.new(:histogram, [:set, :public, :named_table]) # create a table named :histogram
 
