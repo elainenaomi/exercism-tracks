@@ -8,12 +8,12 @@ defmodule RNATranscription do
   'UGAC'
   """
   @spec to_rna([char]) :: [char]
-  def to_rna('A'), do: 'U'
-  def to_rna('C'), do: 'G'
-  def to_rna('T'), do: 'A'
-  def to_rna('G'), do: 'C'
   def to_rna(dna) do
-    [ head | tail ] = dna
-    to_rna([head]) ++ to_rna(tail)
+    Enum.map(dna, &transcribe/1)
   end
+
+  defp transcribe(?A), do: ?U
+  defp transcribe(?C), do: ?G
+  defp transcribe(?T), do: ?A
+  defp transcribe(?G), do: ?C
 end
