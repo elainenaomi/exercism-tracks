@@ -45,6 +45,18 @@ def empty_map?(map) when map_size(map) == 0, do: true
 def empty_map?(map) when is_map(map), do: false
 ```
 
+```
+Keep in mind errors in guards do not leak but simply make the guard fail:
+
+iex> hd(1)
+** (ArgumentError) argument error
+iex> case 1 do
+...>   x when hd(x) -> "Won't match"
+...>   x -> "Got #{x}"
+...> end
+"Got 1"
+```
+
 ## Recursive functions
 
 ```elixir
@@ -66,6 +78,32 @@ defmodule NaturalNums do
   end
 end
 ```
+## Case
+
+```elixir
+case [1,2,3] do
+  [1,2,3] -> IO.puts "Match!"
+  [4,2,3] -> IO.puts "No Match!"
+  [1,2,x] -> IO.puts "Match first two items and x would equal 3"
+  _ -> IO.puts "Wildcard: match any value"
+  [_,_,3] -> IO.puts "Match any value for the first two."
+en
+```
+
+## Cond
+
+If you want to match conditionals instead of values, use cond:
+
+```elixir
+cond do
+  1 === 2 -> "No"
+  1 === "1" -> "No"
+  1 === 1 -> "Yeah!"
+end
+```
+
+
+
 # ETS
 
 ```elixir
