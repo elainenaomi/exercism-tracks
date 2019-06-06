@@ -1,4 +1,6 @@
 defmodule Words do
+  @pattern ~r/[a-zA-Z0-9-\p{L}]+/u
+
   @doc """
   Count the number of words in the sentence.
 
@@ -6,12 +8,10 @@ defmodule Words do
   """
   @spec count(String.t()) :: map
   def count(sentence) do
-    Enum.reduce(
-      Regex.scan(~r/[a-zA-Z0-9-\p{L}]+/u, sentence),
-      %{},
-      fn([word], acc) ->
-        Map.update(acc, String.downcase(word), 1, &(&1 + 1))
-      end
-    )
+    @pattern
+    |> Regex.scan(sentence)
+    |> Enum.reduce(%{}, fn([word], acc) ->
+      Map.update(acc, String.downcase(word), 1, &(&1 + 1))
+    end)
   end
 end
